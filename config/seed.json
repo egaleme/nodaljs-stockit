@@ -1,0 +1,61 @@
+{
+
+  "development": {
+  	"Product": [
+  		{
+  			"user_id": 1,
+  			"name": "Peak 123",
+  			"batchno": "pk-11-mik",
+  			"expiringdate": "Sun Dec 04 2016",
+  			"price": 2500,
+  			"quantity": 20
+  		},
+  		{
+  			"user_id": 1,
+  			"name": "Milo 900g",
+  			"batchno": "ml-k1-i09",
+  			"expiringdate": "Tue Dec 06 2016",
+  			"price": 1500,
+  			"quantity": 20
+  		},
+  		{
+  			"user_id": 1,
+  			"name": "Sugar",
+  			"batchno": "sg-9999",
+  			"expiringdate": "Sun Dec 25 2016",
+  			"price": 450,
+  			"quantity": 200
+  		},
+  		{
+  			"user_id": 1,
+  			"name": "Rice",
+  			"batchno": "-",
+  			"expiringdate": "-",
+  			"price": 25000,
+  			"quantity": 50
+  		},
+  		{
+  			"user_id": 1,
+  			"name": "Nido 900g",
+  			"batchno": "n1-10p9",
+  			"expiringdate": "Fri Jan 06 2017",
+  			"price": 25000,
+  			"quantity": 50
+  		}
+  	],
+  	
+  	"User": [
+  		{
+  			"id": 1,
+  			"username": "admin",
+  			"email": "egaleme@gmail.com",
+  			"password": "200owina07"
+  		}
+  	]
+  },
+
+  "test": {},
+
+  "production": {}
+
+}
