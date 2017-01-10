@@ -2,7 +2,7 @@
   "development": {
     "main": {
       "adapter": "postgres",
-      "host": "127.0.0.1",
+      "host": "localhost",
       "port": "5432",
       "user": "postgres",
       "password": "200owina07",
@@ -12,7 +12,7 @@
   "test": {
     "main": {
       "adapter": "postgres",
-      "host": "127.0.0.1",
+      "host": "localhost",
       "port": "5432",
       "user": "postgres",
       "password": "200owina07",
