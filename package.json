@@ -8,8 +8,12 @@
     "node": "6.0.0"
   },
   "dependencies": {
+    "Validator": "^1.0.3",
     "bcryptjs": "^2.4.0",
-    "nodal": "0.12.10"
+    "jsonwebtoken": "^7.2.1",
+    "nodal": "0.12.10",
+    "nodemailer": "^2.7.0",
+    "nodemailer-smtp-transport": "^2.7.2"
   },
   "devDependencies": {
     "chai": "~3.5.0",

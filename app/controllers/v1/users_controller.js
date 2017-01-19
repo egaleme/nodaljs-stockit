@@ -2,6 +2,7 @@
 
 const Nodal = require('nodal');
 const User = Nodal.require('app/models/user.js');
+const AccessToken = Nodal.require('app/models/access_token.js');
 
 const AuthController = Nodal.require('app/controllers/auth_controller.js');
 
@@ -36,8 +37,13 @@ class V1UsersController extends AuthController {
   create() {
 
     User.create(this.params.body, (err, model) => {
+      if (err) {
+        return this.respond(err)
+      }
 
-      this.respond(err || model);
+     AccessToken.login(this.params, (err, accessToken) =>{
+      this.respond(err || accessToken)
+      });
 
     });
 
