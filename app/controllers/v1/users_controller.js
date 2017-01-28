@@ -51,15 +51,17 @@ class V1UsersController extends AuthController {
       if (err) {
         return this.respond(err)
       }
-      var accessTokenValue = accessToken.get("access_token") 
+      var accessTokenValue = accessToken.get("access_token");
       
       var transporter = nodemailer.createTransport(
       smtpTransport('smtps://stockdiaryapp%40gmail.com:200owina07@smtp.gmail.com'));
 
+      var email = this.params.body.email;
+
       // setup e-mail data with unicode symbols 
       var mailOptions = {
       from: '"StockIT" <stockdiaryapp@gmail.com>', 
-      to: this.params.body.email, 
+      to: email, 
       subject: 'Your stockIT verification email', 
       html: `<h1>stockIT</h1>
              <p>Thanks for signing up with us</p>
@@ -67,7 +69,7 @@ class V1UsersController extends AuthController {
              <a href="https://stockit-app.herokuapp.com/v1/verify_user?access_token=${accessTokenValue}>Verify address</a>` 
       };
 
-      var self = this
+      var self = this;
       // send mail with defined transport object 
       transporter.sendMail(mailOptions, function(error, info){
           if(error){
