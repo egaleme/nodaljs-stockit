@@ -32,6 +32,7 @@ const IndexController = Nodal.require('app/controllers/index_controller.js');
 const V1UsersController = Nodal.require('app/controllers/v1/users_controller.js');
 const V1ProductsController = Nodal.require('app/controllers/v1/products_controller.js');
 const V1AccessTokensController = Nodal.require('app/controllers/v1/access_tokens_controller.js');
+const V1VerifyUserController = Nodal.require('app/controllers/v1/verify_user_controller.js');
 
 /* generator: end imports */
 
@@ -42,6 +43,7 @@ router.route('/').use(IndexController);
 router.route('/v1/users/{id}').use(V1UsersController);
 router.route('/v1/products/{id}').use(V1ProductsController);
 router.route('/v1/access_tokens/{id}').use(V1AccessTokensController);
+router.route('/v1/verify_user/{id}').use(V1VerifyUserController);
 
 /* generator: end routes */
 

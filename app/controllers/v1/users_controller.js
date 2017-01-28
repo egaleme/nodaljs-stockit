@@ -1,6 +1,8 @@
 'use strict';
 
 const Nodal = require('nodal');
+const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
 const User = Nodal.require('app/models/user.js');
 const AccessToken = Nodal.require('app/models/access_token.js');
 
@@ -26,7 +28,8 @@ class V1UsersController extends AuthController {
 
       });
       } else {
-        this.respond({error: "Not Authorized"})
+        var error = new Error("Not Authorized");
+        this.respond(error);
       }
       
     });
@@ -35,17 +38,48 @@ class V1UsersController extends AuthController {
 
 
   create() {
-
+    if (!this.params.body.grant_type || this.params.body.grant_type !=="password") {
+      var error = new Error("please supply grant_type")
+      return this.respond(error);
+    }
     User.create(this.params.body, (err, model) => {
       if (err) {
         return this.respond(err)
       }
 
      AccessToken.login(this.params, (err, accessToken) =>{
-      this.respond(err || accessToken)
-      });
+      if (err) {
+        return this.respond(err)
+      }
+      var accessTokenValue = accessToken.get("access_token") 
+      
+      var transporter = nodemailer.createTransport(
+      smtpTransport('smtps://stockdiaryapp%40gmail.com:200owina07@smtp.gmail.com'));
+
+      // setup e-mail data with unicode symbols 
+      var mailOptions = {
+      from: '"StockIT" <stockdiaryapp@gmail.com>', 
+      to: this.params.body.email, 
+      subject: 'Your stockIT verification email', 
+      html: `<h1>stockIT</h1>
+             <p>Thanks for signing up with us</p>
+             <p>Please click the link below to verify your email address</p>
+             <a href="https://stockit-app.herokuapp.com/v1/verify_user?access_token=${accessTokenValue}>Verify address</a>` 
+      };
+
+      var self = this
+      // send mail with defined transport object 
+      transporter.sendMail(mailOptions, function(error, info){
+          if(error){
+              return console.log(error);
+          }
+          console.log('Message sent: ' + info.response);
+          self.respond({message: "successfully created. please check your email and verify your account"})
+      });         
 
     });
+
+   });
 
   }
 
@@ -75,7 +109,8 @@ class V1UsersController extends AuthController {
 
         });
       } else {
-        this.respond({error: "Not Authorized"})
+        var error = new Error("Not Authorized");
+        this.respond(error);
       }   
     });
 

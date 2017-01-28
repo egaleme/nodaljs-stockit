@@ -12,7 +12,7 @@ class CreateProducts extends Nodal.Migration {
   up() {
 
     return [
-      this.createTable("products", [{"name":"name","type":"string"},{"name":"batchno","type":"string"},{"name":"expiringdate","type":"string"},{"name":"price","type":"int"},{"name":"quantity","type":"int"},{"name":"user_id","type":"int"}])
+      this.createTable("products", [{"name":"name","type":"string"},{"name":"batchno","type":"string"},{"name":"expiringdate","type":"string"},{"name":"price","type":"currency"},{"name":"quantity","type":"int"},{"name":"user_id","type":"int"}])
     ];
 
   }

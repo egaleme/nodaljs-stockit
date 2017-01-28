@@ -15,6 +15,11 @@ class V1ProductsController extends AuthController{
         return this.respond(err)
       }
 
+      if (!user.get("email_verified")) {
+        var error  = new Error("please verify your email address")
+        return this.respond(error)
+      }
+
       Product.query()
       .where({user_id: user.get('id')})
       .join('user')
@@ -39,6 +44,11 @@ class V1ProductsController extends AuthController{
         return this.respond(err)
       }
 
+       if (!user.get("email_verified")) {
+        var error  = new Error("please verify your email address")
+        return this.respond(error)
+      }
+
       Product.query()
       .where({user_id__is: user.get('id')})
       .join('user')
@@ -60,7 +70,18 @@ class V1ProductsController extends AuthController{
           return this.respond(err);
         }
 
+        if (!user.get("email_verified")) {
+        var error  = new Error("please verify your email address")
+        return this.respond(error)
+        }
+
+        if (!this.params.body) {
+          var error  = new Error("please supply all fields")
+          return this.respond(error)
+        }
+
         this.params.body.user_id = user.get('id');
+
         Product.create(this.params.body, (err, model) => {
 
         this.respond(err || model,  ['id', 'name', 'batchno', 'expiringdate', 'price', 'quantity', {user: ['username']}]);
@@ -77,6 +98,12 @@ class V1ProductsController extends AuthController{
         if (err) {
           return this.respond(err)
         }
+
+        if (!user.get("email_verified")) {
+        var error  = new Error("please verify your email address")
+        return this.respond(error)
+        }
+
         Product.query()
         .where({user_id: user.get("id")})
         .where({id: this.params.route.id})
@@ -96,6 +123,12 @@ class V1ProductsController extends AuthController{
         if (err) {
           return this.respond(err)
         }
+
+       if (!user.get("email_verified")) {
+        var error  = new Error("please verify your email address")
+        return this.respond(error)
+        }
+        
         Product.query()
         .where({user_id: user.get('id')})
         .where({id: this.params.route.id})
