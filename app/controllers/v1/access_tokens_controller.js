@@ -21,7 +21,7 @@ class V1AccessTokensController extends Nodal.Controller {
         var error  = new Error("please verify your email address")
         return this.respond(error)
       }
-		this.respond(err ||accessToken, ['id', 'access_token', {user: ['id','username', {products: ['id', 'productid', 'name', 'price', 'quantity', 'batchno', 'expiringdate', 'created_at', 'updated_at']}]}])
+		this.respond(err || accessToken, ['id', 'access_token', {user: ['id','username', {products: ['id', 'productid', 'name', 'price', 'quantity', 'batchno', 'expiringdate', 'created_at', 'updated_at']}]}])
 	});
   });
  }
