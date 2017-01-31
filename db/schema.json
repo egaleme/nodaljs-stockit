@@ -33,6 +33,7 @@
         {"name": "price", "type": "currency", "properties": {}},
         {"name": "quantity", "type": "int", "properties": {}},
         {"name": "user_id", "type": "int", "properties": {}},
+        {"name": "productid", "type": "int", "properties": {"nullable":false,"unique":true}},
         {"name": "created_at", "type": "datetime", "properties": {}},
         {"name": "updated_at", "type": "datetime", "properties": {}}
       ]

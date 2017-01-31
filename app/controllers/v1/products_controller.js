@@ -28,7 +28,7 @@ class V1ProductsController extends AuthController{
           return this.respond(err)
         }
 
-        this.respond(models, ['id', 'name', 'batchno', 'expiringdate', 'price', 'quantity', {user: ['username']}]);
+        this.respond(models, ['id', 'productid', 'name', 'batchno', 'expiringdate', 'price', 'quantity', {user: ['username']}]);
 
       });
 
@@ -52,12 +52,12 @@ class V1ProductsController extends AuthController{
       Product.query()
       .where({user_id__is: user.get('id')})
       .join('user')
-      .where({id__is: this.params.route.id})
+      .where({productid: this.params.route.id})
       .first((err, model) =>{
         if (err) {
           return this.respond(err)
         }
-        this.respond(model,  ['id', 'name', 'batchno', 'expiringdate', 'price', 'quantity', {user: ['username']}])
+        this.respond(model,  ['id', 'productid', 'name', 'batchno', 'expiringdate', 'price', 'quantity', {user: ['username']}])
       })
     });  
 
@@ -84,7 +84,7 @@ class V1ProductsController extends AuthController{
 
         Product.create(this.params.body, (err, model) => {
 
-        this.respond(err || model,  ['id', 'name', 'batchno', 'expiringdate', 'price', 'quantity', {user: ['username']}]);
+        this.respond(err || model,  ['id', 'productid', 'name', 'batchno', 'expiringdate', 'price', 'quantity', {user: ['username']}]);
 
       });
 
@@ -106,13 +106,23 @@ class V1ProductsController extends AuthController{
 
         Product.query()
         .where({user_id: user.get("id")})
-        .where({id: this.params.route.id})
-        .update(this.params.body, (err, product) => {
+        .where({productid: this.params.route.id})
+        .first((err, product) => {
           if (err) {
             return this.respond(err)
           }
-          this.respond(product)
-        })
+          product.set("quantity", this.params.body.quantity)
+          product.set("price", this.params.body.price)
+          product.set("name", this.params.body.name)
+          product.set("expiringdate", this.params.body.expiringdate)
+          product.set("batchno", this.params.body.batchno)
+          product.save((err, product) => {
+            if (err) {
+              return this.respond(err)
+            }
+            this.respond(product)
+          });
+        });
         
         });
   }
@@ -131,7 +141,7 @@ class V1ProductsController extends AuthController{
         
         Product.query()
         .where({user_id: user.get('id')})
-        .where({id: this.params.route.id})
+        .where({productid: this.params.route.id})
         .first((err, product) => {
           if (err) {
             return this.respond(err)
