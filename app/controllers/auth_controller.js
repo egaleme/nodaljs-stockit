@@ -12,7 +12,6 @@ class AuthController extends Nodal.Controller {
 
     AccessToken.verify(this.params, callback)
 
-
   }
 
 }
