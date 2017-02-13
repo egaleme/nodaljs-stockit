@@ -11,4 +11,6 @@ Product.validates('batchno', 'must be supplied', v => v);
 Product.validates('expiringdate', 'must be supplied', v => v);
 Product.validates('quantity', 'must be supplied', v => v );
 Product.validates('price', 'must be supplied', v => v );
+
+
 module.exports = Product;

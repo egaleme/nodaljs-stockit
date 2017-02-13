@@ -9,11 +9,7 @@ class V1ProductsController extends AuthController{
 
   index() {
 
-    this.authorize((err, accessToken, user) => {
-
-      if (err) {
-        return this.respond(err)
-      }
+    this.authorize((accessToken, user) => {
 
       if (!user.get("email_verified")) {
         var error  = new Error("please verify your email address")
@@ -23,12 +19,14 @@ class V1ProductsController extends AuthController{
       Product.query()
       .where({user_id: user.get('id')})
       .join('user')
+      .orderBy('created_at', 'DESC')
+      .limit(this.params.query.offset, this.params.query.count)
       .end((err, models) => {
         if (err) {
           return this.respond(err)
         }
 
-        this.respond(models, ['id', 'productid', 'name', 'batchno', 'expiringdate', 'price', 'quantity', {user: ['username']}]);
+        this.respond(models, ['id', 'productid', 'name', 'batchno', 'expiringdate', 'price', 'quantity', 'created_at', {user: ['username']}]);
 
       });
 
@@ -38,11 +36,7 @@ class V1ProductsController extends AuthController{
 
   show() {
 
-    this.authorize((err, accessToken, user) => {
-
-      if (err) {
-        return this.respond(err)
-      }
+    this.authorize((accessToken, user) => {
 
        if (!user.get("email_verified")) {
         var error  = new Error("please verify your email address")
@@ -64,11 +58,7 @@ class V1ProductsController extends AuthController{
   }
 
   create() {
-    this.authorize((err, accessToken, user) => {
-
-        if (err) {
-          return this.respond(err);
-        }
+    this.authorize((accessToken, user) => {
 
         if (!user.get("email_verified")) {
         var error  = new Error("please verify your email address")
@@ -93,11 +83,7 @@ class V1ProductsController extends AuthController{
   }
 
   update() {
-    this.authorize((err, accessToken, user) => {
-      
-        if (err) {
-          return this.respond(err)
-        }
+    this.authorize((accessToken, user) => {
 
         if (!user.get("email_verified")) {
         var error  = new Error("please verify your email address")
@@ -128,12 +114,8 @@ class V1ProductsController extends AuthController{
   }
 
  destroy() {
-    this.authorize((err, accessToken, user) => {
+    this.authorize((accessToken, user) => {
       
-        if (err) {
-          return this.respond(err)
-        }
-
        if (!user.get("email_verified")) {
         var error  = new Error("please verify your email address")
         return this.respond(error)

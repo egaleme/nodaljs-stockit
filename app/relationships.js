@@ -17,6 +17,6 @@ const User = Nodal.require('app/models/user.js');
 const AccessToken = Nodal.require('app/models/access_token.js');
 
 Product.joinsTo(User, {multiple: true});
-AccessToken.joinsTo(User, {multiple: true});
+
 
 module.exports = {}; // Don't need to export anything

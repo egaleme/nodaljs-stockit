@@ -7,11 +7,7 @@ const User = Nodal.require('app/models/user.js');
 class V1VerifyUserController extends AuthController {
 
   get() {
-        this.authorize((err, accessToken, user) => {
-      
-        if (err) {
-          return this.respond(err)
-        }
+        this.authorize((accessToken, user) => {
 
         User.query()
         .where({id: user.get("id")})

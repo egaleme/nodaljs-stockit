@@ -12,15 +12,11 @@ class V1UsersController extends AuthController {
 
   index() {
 
-    this.authorize((err, accessToken, user) => {
-
-      if (err) {
-        return this.respond(err)
-      }
+    this.authorize((accessToken, user) => {
 
       if (user.get('username') === 'admin') {
 
-        User.query()
+       User.query()
       .where(this.params.query)
       .end((err, models) => {
 
@@ -87,21 +83,33 @@ class V1UsersController extends AuthController {
 
   update() {
 
+    this.authorize((accessToken, user) => {
+
+      if (!user.get('email_verified')) {
+        var error = new Error("please verify your email address")
+        return this.respond(error)
+      }
+      User.query()
+      .where({id: user.get('id')})
+      .update(this.params, (err, model) => {
+        if (err) {
+          return this.respond(err)
+        }
+        this.respond(model)
+      });
+    });
+    /*
     User.update(this.params.route.id, this.params.body, (err, model) => {
 
       this.respond(err || model);
 
     });
-
+    */
   }
 
   destroy() {
 
-    this.authorize((err, accessToken, user) => {
-
-      if (err) {
-        return this.respond(err)
-      }
+    this.authorize((accessToken, user) => {
 
       if (user.get('username') === 'admin') {
 
