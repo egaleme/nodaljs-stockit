@@ -59,10 +59,7 @@ class V1UsersController extends AuthController {
       from: '"StockIT" <stockdiaryapp@gmail.com>', 
       to: email, 
       subject: 'Your stockIT verification email', 
-      html: `<h1>stockIT</h1>
-             <p>Thanks for signing up with us</p>
-             <p>Please click the link below to verify your email address</p>
-             <a href="https://stockit-app.herokuapp.com/v1/verify_user?access_token=${accessTokenValue}>Verify address</a>` 
+      html: `<html><body><h1>stockIT</h1><p>Thanks for signing up with us</p><p>Please click the link below to verify your email address</p><a href="https://stockit-app.herokuapp.com/v1/verify_user?access_token=${accessTokenValue}>Verify address</a></body></html>` 
       };
 
       var self = this;
